@@ -52,8 +52,6 @@ variable "enable_nat_gateway" {
   default     = false
 }
 
-
-
 variable "external_nat_ip_ids" {
   description = "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)"
   type        = list(string)

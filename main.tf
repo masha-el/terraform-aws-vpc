@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-2"
+}
+
 locals {
   max_subnet_length = max(
     length(var.private_subnets),
