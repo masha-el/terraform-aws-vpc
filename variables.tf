@@ -16,6 +16,12 @@ variable "cidr" {
   default     = ""
 }
 
+variable "secondary_cidr_blocks" {
+  description = "List of secondary CIDR blocks to associate with the VPC to extend the IP Address pool"
+  type        = list(string)
+  default     = []
+}
+
 variable "instance_tenancy" {
   description = "A tenancy option for instances launched into the VPC"
   type        = string
@@ -46,11 +52,7 @@ variable "enable_nat_gateway" {
   default     = false
 }
 
-variable "reuse_nat_ips" {
-  description = "Should be true if you don't want EIPs to be created for your NAT Gateways and will instead pass them in via the 'external_nat_ip_ids' variable"
-  type        = bool
-  default     = false
-}
+
 
 variable "external_nat_ip_ids" {
   description = "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)"
@@ -82,6 +84,12 @@ variable "create_igw" {
   default     = true
 }
 
+variable "reuse_nat_ips" {
+  description = "Should be true if you don't want EIPs to be created for your NAT Gateways and will instead pass them in via the 'external_nat_ip_ids' variable"
+  type        = bool
+  default     = false
+}
+
 variable "one_nat_gateway_per_az" {
   description = "Should be true if you want only one NAT Gateway per availability zone. Requires `var.azs` to be set, and the number of `public_subnets` created to be greater than or equal to the number of availability zones specified in `var.azs`."
   type        = bool
@@ -94,8 +102,17 @@ variable "map_public_ip_on_launch" {
   default     = true
 }
 
+variable "private_subnet_suffix" {
+  description = "Suffix to append to private subnets name"
+  type        = string
+  default     = "private"
+}
 
-
+variable "public_subnet_suffix" {
+  description = "Suffix to append to public subnets name"
+  type        = string
+  default     = "public"
+}
 
 ################################################################################
 # Tags
@@ -131,6 +148,7 @@ variable "private_subnet_tags" {
   default     = {}
 }
 
+
 variable "single_nat_gateway" {
   description = "Should be true if you want to provision a single shared NAT Gateway across all of your private networks"
   type        = bool
@@ -145,6 +163,30 @@ variable "nat_gateway_tags" {
 
 variable "vpn_gateway_tags" {
   description = "Additional tags for the VPN gateway"
+  type        = map(string)
+  default     = {}
+}
+
+variable "public_route_table_tags" {
+  description = "Additional tags for the public route tables"
+  type        = map(string)
+  default     = {}
+}
+
+variable "private_route_table_tags" {
+  description = "Additional tags for the private route tables"
+  type        = map(string)
+  default     = {}
+}
+
+variable "s3_tags" {
+  description = "Additional tags for the s3 endpoint"
+  type        = map(string)
+  default     = {}
+}
+
+variable "nat_eip_tags" {
+  description = "Additional tags for the NAT EIP"
   type        = map(string)
   default     = {}
 }

@@ -1,3 +1,8 @@
+output "name" {
+  description = "The name of the VPC specified as argument to this module"
+  value       = var.name
+}
+
 output "vpc_id" {
   description = "The ID of the VPC"
   value       = concat(aws_vpc.this.*.id, [""])[0]
@@ -48,7 +53,38 @@ output "azs" {
   value       = var.azs
 }
 
-output "name" {
-  description = "The name of the VPC specified as argument to this module"
-  value       = var.name
+output "default_route_table_id" {
+  description = "The ID of the default route table"
+  value       = concat(aws_vpc.this.*.default_route_table_id, [""])[0]
 }
+
+output "vpc_main_route_table_id" {
+  description = "The ID of the main route table associated with this VPC"
+  value       = concat(aws_vpc.this.*.main_route_table_id, [""])[0]
+}
+
+output "public_route_table_ids" {
+  description = "List of IDs of public route tables"
+  value       = aws_route_table.public.*.id
+}
+
+output "private_route_table_ids" {
+  description = "List of IDs of private route tables"
+  value       = aws_route_table.private.*.id
+}
+
+output "public_internet_gateway_route_id" {
+  description = "ID of the internet gateway route."
+  value       = concat(aws_route.public_internet_gateway.*.id, [""])[0]
+}
+
+output "private_route_table_association_ids" {
+  description = "List of IDs of the private route table association"
+  value       = aws_route_table_association.private.*.id
+}
+
+output "public_route_table_association_ids" {
+  description = "List of IDs of the public route table association"
+  value       = aws_route_table_association.public.*.id
+}
+
