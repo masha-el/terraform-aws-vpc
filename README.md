@@ -1,2 +1,3 @@
 # terraform-aws-vpc
-Testing area
+
+Building a module with VPC, private & public subnets, IGW, NatG, s3 endpoint, VPN.
